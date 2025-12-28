@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I-Chin Tseng | R&D Process Integration Engineer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- 核心變數設定 --- */
+        :root {
+            --bg-color: #0b1120; /* 深空藍黑 */
+            --card-bg: #1e293b;  /* 卡片背景 (維持深色以便閱讀) */
+            --accent-color: #06b6d4; /* 科技青 (Cyan) - 核心光芒顏色 */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --highlight: #f59e0b; /* 重點數據亮橘色 */
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative; /* 為了讓偽元素定位 */
+        }
+
+        /* --- 全新科技背景層 --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* 置於最底層 */
+            pointer-events: none; /* 確保不影響滑鼠點擊 */
+
+            background-image:
+                radial-gradient(circle at 50% 40%, rgba(6, 182, 212, 0.15) 0%, rgba(11, 17, 32, 0.8) 80%),
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(6, 182, 212, 0.02) 20px, rgba(6, 182, 212, 0.02) 22px),
+                linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+
+            background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+            background-position: center center;
+        }
+
+
+        /* --- 排版與容器 --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1; /* 確保內容在背景之上 */
+        }
+
+        section {
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Header / Hero Section --- */
+        header {
+            padding: 60px 0;
+            border-bottom: none; 
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        header::before {
+            display: none;
+        }
+
+        /* 照片樣式設定 */
+        .profile-photo {
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            margin-right: 40px;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);
+            background-color: var(--card-bg);
+            flex-shrink: 0;
+        }
+
+        .header-content {
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            background: linear-gradient(90deg, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(6, 182, 212, 0.3);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .contact-info span, .contact-info a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info span i, .contact-info a i {
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- 通用標題樣式 --- */
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            text-shadow: 0 0 8px rgba(6, 182, 212, 0.2);
+        }
+
+        h2 i {
+            margin-right: 10px;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        /* --- Summary Cards --- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.85);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(6, 182, 212, 0.1);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.4);
+            border-color: var(--accent-color);
+        }
+
+        .highlight-text {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .stat-num {
+            color: var(--highlight);
+            font-weight: bold;
+            font-family: var(--font-mono);
+            text-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
+        }
+
+        /* --- Experience (Timeline Style) --- */
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .company {
+            color: var(--accent-color);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+        }
+
+        .date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .exp-details ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .exp-details li {
+            position: relative;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .exp-details li::before {
+            content: '▹';
+            position: absolute;
+            left: -20px;
+            color: var(--accent-color);
+        }
+
+        .sub-metrics {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 2px solid var(--highlight);
+        }
+
+        /* --- 這裡做了修改 --- */
+        .metric-row {
+            display: flex;
+            /* justify-content: space-between;  <-- 刪除：不要撐開 */
+            justify-content: flex-start;    /* <-- 新增：靠左對齊 */
+            align-items: center;            /* 垂直置中 */
+            gap: 15px;                      /* 新增：文字與數字之間的間距 */
+            margin-bottom: 5px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        /* --- Skills (Chip Style) --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            background: rgba(6, 182, 212, 0.05);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+
+        /* --- Education --- */
+        .edu-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .gpa-badge {
+            background: var(--highlight);
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-family: var(--font-mono);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 40px;
+            }
+            .profile-photo {
+                margin-right: 0;
+                margin-bottom: 30px;
+                width: 180px;
+                height: 180px;
+            }
+            .header-content {
+                text-align: center;
+            }
+            h1 { font-size: 2.5rem; }
+            .job-header { flex-direction: column; }
+            .company { margin-bottom: 5px; }
+            .contact-info {
+                justify-content: center;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <img src="IMG_7655.jpg" alt="I-Chin Tseng" class="profile-photo">
+        
+        <div class="header-content">
+            <h1>I-CHIN TSENG</h1>
+            <div class="subtitle">R&D | Process Integration Engineering</div>
+            <div class="contact-info">
+                <span><i class="fas fa-microchip"></i> 3 Years Experience in SiC Power MOSFET / SBD</span>
+                <a href="mailto:stevenz1x2c37800@gmail.com"><i class="fas fa-envelope"></i> stevenz1x2c37800@gmail.com</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="summary">
+        <h2><i class="fas fa-chart-line"></i> Professional Summary</h2>
+        <div class="summary-grid">
+            <div class="card">
+                <h3><i class="fas fa-car"></i> Automotive Qualified</h3>
+                <p>Led 1200V / 40mΩ SiC planar MOSFET from development to <span class="highlight-text">AEC‑Q101 mass production</span>.</p>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-arrow-up"></i> Yield Improvement</h3>
+                <p>Implemented defect mitigation strategies, improving yield from <span class="stat-num">70% to 90%</span>.</p>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-layer-group"></i> Tech Innovation</h3>
+                <p>Led Trench MOSFET platform development, achieving a <span class="stat-num">19% reduction</span> in Rdson·sp.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2><i class="fas fa-briefcase"></i> Work Experience</h2>
+        
+        <div class="card">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Principal Engineer</div>
+                    <div class="company">Foxconn S Group | Hon Young Semiconductor Corp.</div>
+                </div>
+                <div class="date">Mar 2023 – Present</div>
+            </div>
+
+            <div class="exp-details">
+                <ul>
+                    <li><strong>SiC Gen2 Planar MOSFET Development:</strong> Led development (1200V/40mΩ), achieving company’s first AEC-B Grade automotive-qualified mass production within one year.</li>
+                    <li><strong>Yield Enhancement:</strong> Analyzed process bottlenecks and proposed systematic improvements, boosting yield from <span class="stat-num">70% to 90%</span> and mitigating low-yield risks.</li>
+                    <li><strong>Critical Process Uniformity:</strong> Collaborated with Photo and Etch R&D modules, resulting in major electrical parameter stability improvements:
+                        <div class="sub-metrics">
+                            <div class="metric-row"><span>Vth Std Dev:</span> <span class="stat-num">50% Improvement</span></div>
+                            <div class="metric-row"><span>Rdson Std Dev:</span> <span class="stat-num">44% Improvement</span></div>
+                            <div class="metric-row"><span>BVDSS Std Dev:</span> <span class="stat-num">81.6% Improvement</span></div>
+                        </div>
+                    </li>
+                    <li><strong>Reliability & FA:</strong> Conducted EFA/PFA to resolve reliability issues, optimizing processes for successful AEC-Q101 qualification.</li>
+                    <li><strong>Trench MOSFET Gen1 Platform:</strong> Led TCAD simulation, device design, and process optimization. Compared to planar MOSFETs:
+                        <div class="sub-metrics">
+                            <div class="metric-row"><span>Cell Pitch:</span> <span>Reduced 5.4µm ➝ 2.6µm</span></div>
+                            <div class="metric-row"><span>Rdson·sp:</span> <span class="stat-num">Reduced by 19%</span></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2><i class="fas fa-tools"></i> Technical Skills</h2>
+        <div class="skills-container">
+            <span class="skill-tag">SiC Power MOSFET / SBD</span>
+            <span class="skill-tag">Process Flow Design</span>
+            <span class="skill-tag">SILVACO TCAD</span>
+            <span class="skill-tag">Keysight B1505A</span>
+            <span class="skill-tag">Device Physics Analysis</span>
+            <span class="skill-tag">Failure Analysis (EFA/PFA)</span>
+            <span class="skill-tag">Excel VBA</span>
+            <span class="skill-tag">Yield Enhancement</span>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+        <div class="card edu-card">
+            <div>
+                <h3 style="color: #fff; margin-bottom: 5px;">M.S. in Electronic Engineering</h3>
+                <div class="company">National Taiwan University of Science and Technology (NTUST)</div>
+                <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.9rem;">
+                    Thesis: Ultra-nano diamond composite two-dimensional MoS₂ for high-response photodetector
+                </p>
+            </div>
+            <div>
+                <span class="gpa-badge">GPA: 4.21 / 4.3</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Thank you for taking the time to review my projects and experience.</p>
+        <p>If you are interested in my background, I would be happy to connect and discuss further.</p>
+        <a href="mailto:stevenz1x2c37800@gmail.com" class="cta-button">Contact Me</a>
+    </footer>
+</div>
+
+</body>
+</html>
